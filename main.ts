@@ -54,16 +54,13 @@ export default class ObsidianLoomMcpPlugin extends Plugin {
         }
       },
       async ({ sourcePath, linkPath }: { sourcePath: string; linkPath: string; }) => {
-        console.log(`Following link from ${sourcePath} to ${linkPath}`);
         const file = this.app.metadataCache.getFirstLinkpathDest(linkPath, sourcePath);
-        console.log(`File found: ${file ? file.path : 'None'}`);
         if (!file) {
           console.error(`File not found: ${linkPath}`);
           return { content: [ { type: "text" as const, text: "File not found" } ] };
         }
 
         const content = await this.app.vault.cachedRead(file);
-        console.log(content);
 
         return {
           content: [
@@ -79,7 +76,7 @@ export default class ObsidianLoomMcpPlugin extends Plugin {
     this.expressServer.listen(PORT, () => {
       console.log(`MCP Server running on http://localhost:${PORT}/mcp`);
     }).on('error', error => {
-        console.error('Server error:', error);
+      console.error('Server error:', error);
     });
 	}
 
